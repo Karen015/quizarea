@@ -1,4 +1,6 @@
 import { defaulteLanguage, translates } from "./constants.js";
+import { questions } from "./db.js";
+import { valueSetter, tagCreator } from "./helpers.js";
 const warrningText = translates[defaulteLanguage].warningText;
     const warningContainer = document.getElementById('warning');
     
@@ -22,23 +24,23 @@ const warrningText = translates[defaulteLanguage].warningText;
 
 
 
+const quizGenerator = (quizlist) => {
+    let quizStep = 0;
+    const question = quizlist[quizStep];
 
-// function foo() {
-//  const warrningText = translates[defaulteLanguage].warningText;
-//  const warningContainer = document.getElementById('warning')
-//   let i = 0;
-
-//   let typeWriter = () =>{
+    return () => {
+      valueSetter('#quiz_title', question.quizTitle);
+      valueSetter('#helpers', question.quiz);
+      
+      question.options.forEach(quiz => {
+        tagCreator('li', document.getElementById('quiz_options'), quiz)
+      });
+    }
   
-//     if(i < warrningText.length){
-//       warningContainer.innerHTML += warrningText.charAt(i);
-//       i++
-//     }
-//     setTimeout(typeWriter, 100)
-// }
-
-// setTimeout(typeWriter, 100)
-// }
+}
 
 
-// foo()
+const quizConfig = quizGenerator(questions)
+
+
+quizConfig()
